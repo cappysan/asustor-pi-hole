@@ -1,0 +1,9 @@
+#!/usr/bin/env sh
+#
+. /usr/local/AppCentral/cappysan-pi-hole/.env.install
+cd ${APKG_PKG_DIR:-/nonexistent} || exit 1
+
+
+if test -f "${APKG_CFG_DIR}/active"; then
+  ./CONTROL/start-stop.sh restart
+fi

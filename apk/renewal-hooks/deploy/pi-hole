@@ -1,5 +1,0 @@
-#!/usr/bin/env sh
-#
-cd /root/AppCentral/cappysan-pi-hole || exit 0
-
-./CONTROL/start-stop.sh restart

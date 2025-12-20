@@ -7,7 +7,7 @@ answers:
   # File generated with mk-scaffold:
   #   cf. nitpick/scaffold-tpl-version-check.toml
   template_used: "https://gitlab.com/cappysan/scaffolds/asustor-template.git"
-  template_used_version: "1.1.0-r2"
+  template_used_version: "1.1.0-r4"
 
   author: "Julien Lecomte"
   email: "julien@cappysan.dev"
@@ -19,6 +19,7 @@ answers:
   project_url: "https://gitlab.com/cappysan/asustor/pi-hole"
   project_description: "Asustor Pi-hole application"
   project_path: "asustor/pi-hole"
+  project_wp_url: "https://asustor.cappysan.dev/pi-hole/"
 
   has_documentation: False
   documentation_url: "https://example.com"
@@ -27,8 +28,17 @@ answers:
 
   has_pages: False
   has_pages_on_main: False
-  has_releases: True
+  has_releases: False
   has_changelog: True
+
+  user_name: "admin"
+  is_pipx: False
+  is_single_app: False
+  download_url: "https://example.com"
+  use_start_stop_daemon: False
+  has_port: True
+  has_adm_desktop: True
+  has_renewal_hook: True
 
   license: "MIT"
   version: "2025.11.1-r1"
@@ -39,4 +49,4 @@ answers:
 
   # Hidden fields
   creation_year: "2025"
-  last_update: "2025-12-20 17:55:53"
+  last_update: "2026-01-01 17:48:47"

@@ -2,26 +2,10 @@
 
 Changes relevant to the users of Cappysan's Asustor Pi-hole APK are documented here.
 
-This project adheres to [Semantic Versioning](https://semver.org/).
+This project adheres to [CalVer Versioning](https://calver.org/).
 
-## x.y.z-rX [Unreleased]
-
-### Added
-
-- Lorem ipsum sit dolor amet.
+## 2025-11.1-r1 - 2026-01-01
 
 ### Changed
 
-- Lorem ipsum sit dolor amet.
-
-### Deprecated
-
-- Lorem ipsum sit dolor amet.
-
-### Fixed
-
-- Lorem ipsum sit dolor amet.
-
-## [1.2.3] - 2025-11-06
-
-(...)
+- Initial release.

@@ -22,7 +22,7 @@
       }
     ],
     "boot-priority": {
-      "start-order": 60,
+      "start-order": 50,
       "stop-order": 30
     },
     "port": [

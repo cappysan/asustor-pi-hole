@@ -1,6 +1,6 @@
-# Asustor - Pi-hole
+# Cappysan's Asustor Pi-hole APK
 
-Lorem ipsum sit dolor amet. (TODO)
+Linux network-level advertisement and Internet tracker blocking application which acts as a DNS sinkhole and optionally a DHCP server, intended for use on a private network.
 
 
 ## Table of contents
@@ -14,25 +14,20 @@ Lorem ipsum sit dolor amet. (TODO)
 
 The APK application is available as a GitLab release, and on [https://asustor.cappysan.dev/](https://asustor.cappysan.dev/)
 
+The APK application is not available as an Asustor App Central application as Asustor does not accept duplicates, even if they differ.
 
-### Application Installation <a name="installation"></a>
 
-**Step 1**
+### Usage
 
-- Download the APK file from Cappysan's Asustor website ([https://asustor.cappysan.dev/](https://asustor.cappysan.dev/)  
-- Enter the Asustor App Center from your Asustor NAS user interface  
-- Enter the 'Management" tab in the App Center  
-- Enter the "Manual Install" left tab from the "Management" tab  
-- Select the previously downloaded file for the "Browse" input box  
-- Click "Upload" and follow further instructions from pop-up box  
+A brief usage guide can be found below. A more complete step-by-step guide is available on [https://blog.cappysan.dev](https://blog.cappysan.dev) in the Asustor section.
 
-**Step 2**
 
-In order to secure the newly created "Configuration" shared folder:
+### Installing
 
-- Enter the "Access Control" tab in the App Center  
-- Enter the "Shared folders" left tab from the "Access Control" tab  
-- Select the "Configuration" folder to allow only the required users to modify the configuration  
+- Download the APK file from Cappysan's Asustor website ([https://asustor.cappysan.dev/pi-hole/](https://asustor.cappysan.dev/pi-hole/)  
+- Install the package
+- A share folder named "Configuration" will be created. Configure it to only enable admins in read-write mode. Deny anonymous and user access.
+- Ensure you can modify files in the "Configuration/cerbot" with either SSH, a mount point, or the Asustor File Explorer.
 
 
 ### Configuration
@@ -64,7 +59,8 @@ Please refer to the upstream software documentation for details on their respect
 
 ## Links <a name="links"></a>
 
-  * Cappysan's Asustor home lab tutorial: [https://blog.cappysan.dev/asustor/index.html](https://blog.cappysan.dev/asustor/index.html)
+  * Cappysan's Asustor Tutorials & Procedures: [https://blog.cappysan.dev/asustor/index.html](https://blog.cappysan.dev/asustor/index.html)
   * Cappysan's Asustor applications website: [https://asustor.cappysan.dev/](https://asustor.cappysan.dev/)
-  * Website: [https://asustor.cappysan.dev/](https://asustor.cappysan.dev/)
+  * GitLab: [https://gitlab.com/cappysan/asustor/pi-hole](https://gitlab.com/cappysan/asustor/pi-hole)
+  * GitHub: [https://github.com/cappysan/asustor-pi-hole](https://github.com/cappysan/asustor-pi-hole)
   * Discord: [https://discord.gg/SsY3CAdp4Q](https://discord.gg/SsY3CAdp4Q)
