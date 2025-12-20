@@ -1,0 +1,17 @@
+# This file should be used with `nitpick check` and not `nitpick fix`
+#
+# This file enables checking that a templated project that uses this
+# project uses the latest available version.
+[nitpick.meta]
+name = "upstream-version-check"
+url = "https://gitlab.com/cappysan/scaffolds/asustor-template.git"
+
+[nitpick.files.present]
+".answers.yml" = "Scaffold answer file, created by mk-scaffold"
+
+[".answers.yml".answers]
+# If the following version mismatches during a `nitpick check`,
+# it means that the remote template source has been updated,
+# but that this current project hasn't be upgraded to the latest template.
+template_used = "https://gitlab.com/cappysan/scaffolds/asustor-template.git"
+template_used_version = "1.1.0-r2"

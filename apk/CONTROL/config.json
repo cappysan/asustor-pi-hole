@@ -1,0 +1,47 @@
+{
+  "general": {
+    "architecture": "any",
+    "conflicts": [],
+    "depends": [
+      "docker-ce(>=28.0.0)"
+    ],
+    "email": "julien@cappysan.dev",
+    "firmware": "5.0.0",
+    "maintainer": "Cappysan",
+    "name": "pi-hole",
+    "package": "cappysan-pi-hole",
+    "version": "2025.11.1-r1",
+    "developer": "pi-hole",
+    "website": "https://gitlab.com/cappysan/asustor/pi-hole"
+  },
+  "register": {
+    "share-folder": [
+      {
+        "name": "Configuration",
+        "description": "Application configuration"
+      }
+    ],
+    "boot-priority": {
+      "start-order": 60,
+      "stop-order": 30
+    },
+    "port": [
+      5010,
+      5011
+    ]
+  },
+  "adm-desktop": {
+    "app": {
+      "port": 5011,
+      "protocol": "https",
+      "type": "custom",
+      "http_port": 5010,
+      "https_port": 5011,
+      "url": "/"
+    },
+    "privilege": {
+      "accessible": "administrators",
+      "customizable": false
+    }
+  }
+}
