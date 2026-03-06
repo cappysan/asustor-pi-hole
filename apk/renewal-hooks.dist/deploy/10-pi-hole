@@ -1,0 +1,21 @@
+#!/usr/bin/env sh
+#
+WHAT=pi-hole
+
+if test "x${RENEWED_LINEAGE}" == "x"; then
+   RENEWED_LINEAGE=/etc/letsencrypt/live/$(certbot certificates 2>/dev/null | grep "Certificate Name:" | head -1 | cut -d":" -f2 | xargs)
+   echo RENEWED_LINEAGE=$RENEWED_LINEAGE
+fi
+
+. /usr/local/AppCentral/cappysan-pi-hole/.env.install
+
+function logger() {
+  echo "${@}" >&2
+  syslog --log 0 --level 0 --user SYSTEM --event "${@}"
+}
+
+cd ${APKG_PKG_DIR:-/nonexistent} || exit 1
+
+if test -f "${APKG_CFG_DIR}/active"; then
+  ./CONTROL/start-stop.sh restart
+fi

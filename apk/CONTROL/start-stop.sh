@@ -5,7 +5,6 @@
 cd ${APKG_PKG_DIR:-/nonexistent} || exit 1
 
 export HOME=/share/Configuration/pi-hole
-
 case $1 in
   start)
     touch "${APKG_CFG_DIR}/active"
