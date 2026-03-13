@@ -8,8 +8,8 @@ export HOME=/share/Configuration/pi-hole
 case $1 in
   start)
     touch "${APKG_CFG_DIR}/active"
-
     cd ${APKG_CFG_DIR:-/nonexistent} || exit 1
+    logger "[pi-hole] Starting docker container..."
 
     # Copy the current SSL to pihole
     # Certificate can be other than Asustor or Certbot
@@ -27,8 +27,8 @@ case $1 in
     if test -f "${APKG_CFG_DIR}/active"; then
       rm -f "${APKG_CFG_DIR}/active"
     fi
-
     cd ${APKG_CFG_DIR:-/nonexistent} || exit 1
+    logger "[pi-hole] Stopping docker container..."
     docker-compose down
     ;;
 
@@ -37,8 +37,15 @@ case $1 in
     ./CONTROL/start-stop.sh start
     ;;
 
+  reload)
+    if test -f "${APKG_CFG_DIR}/active"; then
+      ./CONTROL/start-stop.sh stop
+      ./CONTROL/start-stop.sh start
+    fi
+    ;;
+
   *)
-    echo "usage: $0 {start|stop|restart}"
+    echo "usage: $0 {start|stop|restart|reload}"
     exit 1
     ;;
 

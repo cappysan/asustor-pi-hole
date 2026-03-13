@@ -18,9 +18,9 @@ APKG_GROUP=root
 # ====================
 if test ! -d ${APKG_CFG_DIR}; then
   mkdir -p ${APKG_CFG_DIR}
-  chown -R ${APKG_USER}:${APKG_GROUP} ${APKG_CFG_DIR}
-  chmod 750 ${APKG_CFG_DIR}
 fi
+chown -R ${APKG_USER}:${APKG_GROUP} ${APKG_CFG_DIR}
+chmod 750 ${APKG_CFG_DIR}
 
 
 # Backups
@@ -41,11 +41,12 @@ rsync -a --inplace --ignore-existing ${APKG_PKG_DIR}/conf.dist/ ${APKG_CFG_DIR}
 chown -R ${APKG_USER}:${APKG_GROUP} ${APKG_CFG_DIR}
 chmod 750 ${APKG_CFG_DIR}
 
-
-# Apache
-# ======
-if test -d ${APKG_PKG_DIR}/sites-available.dist; then
-  mkdir -p /usr/local/AppCentral/cappysan-apache/sites-available/
-  rsync -a --inplace --ignore-existing ${APKG_PKG_DIR}/sites-available.dist/ \
-    /usr/local/AppCentral/cappysan-apache/sites-available/
+if test -f /root/AppCentral/cappysan-persistence/CONTROL/start-stop.sh; then
+  /root/AppCentral/cappysan-persistence/CONTROL/start-stop.sh reload
+fi
+if test -f /root/AppCentral/cappysan-certbot/CONTROL/start-stop.sh; then
+  /root/AppCentral/cappysan-certbot/CONTROL/start-stop.sh reload
+fi
+if test -f /root/AppCentral/cappysan-apache/CONTROL/start-stop.sh; then
+  /root/AppCentral/cappysan-apache/CONTROL/start-stop.sh reload
 fi
