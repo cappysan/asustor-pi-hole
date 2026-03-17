@@ -18,9 +18,9 @@ APKG_GROUP=root
 # ====================
 if test ! -d ${APKG_CFG_DIR}; then
   mkdir -p ${APKG_CFG_DIR}
+  chown -R ${APKG_USER}:${APKG_GROUP} ${APKG_CFG_DIR}
+  chmod 750 ${APKG_CFG_DIR}
 fi
-chown -R ${APKG_USER}:${APKG_GROUP} ${APKG_CFG_DIR}
-chmod 750 ${APKG_CFG_DIR}
 
 
 # Backups
@@ -39,13 +39,10 @@ chown -R ${APKG_USER}:${APKG_GROUP} ${APKG_CFG_DIR}/backups
 # =============
 rsync -a --inplace --ignore-existing ${APKG_PKG_DIR}/conf.dist/ ${APKG_CFG_DIR}
 chown -R ${APKG_USER}:${APKG_GROUP} ${APKG_CFG_DIR}
-chmod 750 ${APKG_CFG_DIR}
 
 if test -f /root/AppCentral/cappysan-persistence/CONTROL/start-stop.sh; then
+  export DOCKER_NO_RELOAD=1
   /root/AppCentral/cappysan-persistence/CONTROL/start-stop.sh reload
-fi
-if test -f /root/AppCentral/cappysan-certbot/CONTROL/start-stop.sh; then
-  /root/AppCentral/cappysan-certbot/CONTROL/start-stop.sh reload
 fi
 if test -f /root/AppCentral/cappysan-apache/CONTROL/start-stop.sh; then
   /root/AppCentral/cappysan-apache/CONTROL/start-stop.sh reload

@@ -4,11 +4,16 @@
 . /usr/local/AppCentral/cappysan-pi-hole/.env.install
 cd ${APKG_PKG_DIR:-/nonexistent} || exit 1
 
+function logger() {
+  echo "${@}" >&2
+  syslog --log 0 --level 0 --user SYSTEM --event "${@}"
+}
+
 export HOME=/share/Configuration/pi-hole
 case $1 in
   start)
-    touch "${APKG_CFG_DIR}/active"
     cd ${APKG_CFG_DIR:-/nonexistent} || exit 1
+    touch "${APKG_CFG_DIR}/active"
     logger "[pi-hole] Starting docker container..."
 
     # Copy the current SSL to pihole
@@ -24,9 +29,7 @@ case $1 in
     ;;
 
   stop)
-    if test -f "${APKG_CFG_DIR}/active"; then
-      rm -f "${APKG_CFG_DIR}/active"
-    fi
+    rm -f "${APKG_CFG_DIR}/active"
     cd ${APKG_CFG_DIR:-/nonexistent} || exit 1
     logger "[pi-hole] Stopping docker container..."
     docker-compose down

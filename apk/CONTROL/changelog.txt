@@ -6,6 +6,10 @@ This project adheres to [CalVer Versioning](https://calver.org/).
 
 ## 2025.11.1-r2 - 2026-03-13
 
+### Added
+
+- Use DOCKER_NO_RELOAD since we should not reload the docker daemon
+
 ### Changed
 
 - Changed start-stop to add a reload option
