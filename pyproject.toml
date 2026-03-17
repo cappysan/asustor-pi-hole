@@ -6,7 +6,7 @@
 # ------------------------------------------------------------------------------
 [project]
 name = "cappysan-pi-hole"
-version = "2025.11.1-r1"
+version = "2025.11.1-r2"
 authors = [
   {name = "Julien Lecomte", email = "julien@cappysan.dev"}
 ]
@@ -24,7 +24,7 @@ Homepage = "https://gitlab.com/cappysan/asustor/pi-hole"
 # Other tools
 # ------------------------------------------------------------------------------
 [tool.bumpversion]
-current_version = "2025.11.1-r1"
+current_version = "2025.11.1-r2"
 
 parse = """(?x)
   (?P<major>0|[1-9]\\d*)\\.
