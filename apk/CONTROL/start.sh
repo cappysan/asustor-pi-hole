@@ -4,6 +4,8 @@
 . /usr/local/AppCentral/cappysan-apache/.env.install
 cd ${APKG_PKG_DIR:-/nonexistent} || exit 1
 
+# Dependencies
+# ============
 # persistence: take etc/hosts into account
 if test -f /root/AppCentral/cappysan-persistence/CONTROL/start-stop.sh; then
   export DOCKER_NO_RELOAD=1

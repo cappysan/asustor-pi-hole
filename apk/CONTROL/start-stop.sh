@@ -15,6 +15,7 @@ case $1 in
     logger "[pi-hole] Starting docker container..."
     touch "${APKG_CFG_DIR}/active"
     ./CONTROL/start.sh
+    ./CONTROL/upgrade.sh
 
     cd ${APKG_CFG_DIR:-/nonexistent} || exit 1
     docker-compose up -d
