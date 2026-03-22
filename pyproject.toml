@@ -6,7 +6,7 @@
 # ------------------------------------------------------------------------------
 [project]
 name = "cappysan-pi-hole"
-version = "2025.11.1-r2"
+version = "2026.02.1-r3"
 authors = [
   {name = "Julien Lecomte", email = "julien@cappysan.dev"}
 ]
@@ -24,12 +24,12 @@ Homepage = "https://gitlab.com/cappysan/asustor/pi-hole"
 # Other tools
 # ------------------------------------------------------------------------------
 [tool.bumpversion]
-current_version = "2025.11.1-r2"
+current_version = "2026.02.1-r3"
 
 parse = """(?x)
   (?P<major>0|[1-9]\\d*)\\.
-  (?P<minor>0|[1-9]\\d*)\\.
-  (?P<patch>0|[1-9]\\d*)
+  (?P<minor>[0-9]\\d*)\\.
+  (?P<patch>[0-9]\\d*)
   -r(?P<rev>0|[1-9]\\d*)
 """
 
@@ -58,6 +58,18 @@ post_commit_hooks = []
 serialize = [
   "{major}.{minor}.{patch}-r{rev}",
 ]
+
+[tool.bumpversion.parts.major]
+calver_format = "{YYYY}"
+always_increment = false
+
+[tool.bumpversion.parts.minor]
+calver_format = "{0M}"
+always_increment = false
+
+[tool.bumpversion.parts.patch]
+calver_format = "{0D}"
+always_increment = false
 
 [tool.bumpversion.parts.rev]
 first_value = "1"

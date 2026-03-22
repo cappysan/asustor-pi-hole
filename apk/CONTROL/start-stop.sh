@@ -12,26 +12,19 @@ function logger() {
 export HOME=/share/Configuration/pi-hole
 case $1 in
   start)
-    cd ${APKG_CFG_DIR:-/nonexistent} || exit 1
-    touch "${APKG_CFG_DIR}/active"
     logger "[pi-hole] Starting docker container..."
+    touch "${APKG_CFG_DIR}/active"
+    ./CONTROL/start.sh
 
-    # Copy the current SSL to pihole
-    # Certificate can be other than Asustor or Certbot
-    if test -f /usr/builtin/etc/certificate/ssl.pem; then
-      cp -f /usr/builtin/etc/certificate/ssl.pem etc/pihole/tls.pem
-    elif test -f /usr/builtin/etc/certificate/ssl.chain; then
-      cat /usr/builtin/etc/certificate/ssl.key /usr/builtin/etc/certificate/ssl.chain /usr/builtin/etc/certificate/ssl.crt > etc/pihole/tls.pem
-    else
-      cat /usr/builtin/etc/certificate/ssl.key /usr/builtin/etc/certificate/ssl.crt > etc/pihole/tls.pem
-    fi
+    cd ${APKG_CFG_DIR:-/nonexistent} || exit 1
     docker-compose up -d
     ;;
 
   stop)
-    rm -f "${APKG_CFG_DIR}/active"
-    cd ${APKG_CFG_DIR:-/nonexistent} || exit 1
     logger "[pi-hole] Stopping docker container..."
+    rm -f "${APKG_CFG_DIR}/active"
+
+    cd ${APKG_CFG_DIR:-/nonexistent} || exit 1
     docker-compose down
     ;;
 
