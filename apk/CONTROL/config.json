@@ -10,7 +10,7 @@
     "maintainer": "Cappysan",
     "name": "pi-hole",
     "package": "cappysan-pi-hole",
-    "version": "2026.02.1-r3",
+    "version": "2026.02.1-r4",
     "developer": "pi-hole",
     "website": "https://gitlab.com/cappysan/asustor/pi-hole"
   },

@@ -41,7 +41,7 @@ answers:
   has_renewal_hook: True
 
   license: "MIT"
-  version: "2026.02.1-r3"
+  version: "2026.02.1-r4"
   version_style: "calver-rev"
 
   keep_placeholders: False

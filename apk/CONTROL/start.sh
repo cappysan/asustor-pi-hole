@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 # SPDX-License-Identifier: MIT
 #
-. /usr/local/AppCentral/cappysan-apache/.env.install
+. /usr/local/AppCentral/cappysan-pi-hole/.env.install
 cd ${APKG_PKG_DIR:-/nonexistent} || exit 1
 
 # Dependencies
@@ -18,6 +18,7 @@ fi
 
 # Copy the current SSL to pihole
 # Certificate can be other than Asustor or Certbot
+cd ${APKG_CFG_DIR:-/nonexistent} || exit 1
 if test -f /usr/builtin/etc/certificate/ssl.pem; then
   cp -f /usr/builtin/etc/certificate/ssl.pem etc/pihole/tls.pem
 elif test -f /usr/builtin/etc/certificate/ssl.chain; then
