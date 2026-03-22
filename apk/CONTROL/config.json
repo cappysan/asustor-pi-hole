@@ -10,7 +10,7 @@
     "maintainer": "Cappysan",
     "name": "pi-hole",
     "package": "cappysan-pi-hole",
-    "version": "2026.02.1-r4",
+    "version": "2026.02.1-r11",
     "developer": "pi-hole",
     "website": "https://gitlab.com/cappysan/asustor/pi-hole"
   },
@@ -22,8 +22,9 @@
       }
     ],
     "boot-priority": {
-      "start-order": 50,
-      "stop-order": 30
+      "comment": "docker-ce start order is 65, and persistence is 60.",
+      "start-order": 67,
+      "stop-order": 33
     },
     "port": [
       5010,

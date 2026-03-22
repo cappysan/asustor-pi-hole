@@ -3,19 +3,13 @@
 #
 . /usr/local/AppCentral/cappysan-pi-hole/.env.install
 cd ${APKG_PKG_DIR:-/nonexistent} || exit 1
+. ${APKG_PKG_DIR}/env
 
-function logger() {
-  echo "${@}" >&2
-  syslog --log 0 --level 0 --user SYSTEM --event "${@}"
-}
-
-export HOME=/share/Configuration/pi-hole
 case $1 in
   start)
     logger "[pi-hole] Starting docker container..."
-    touch "${APKG_CFG_DIR}/active"
-    ./CONTROL/start.sh
-    ./CONTROL/upgrade.sh
+    touch "${APKG_PKG_DIR}/active"
+    ./CONTROL/start-hook.sh
 
     cd ${APKG_CFG_DIR:-/nonexistent} || exit 1
     docker-compose up -d
@@ -23,7 +17,7 @@ case $1 in
 
   stop)
     logger "[pi-hole] Stopping docker container..."
-    rm -f "${APKG_CFG_DIR}/active"
+    rm -f "${APKG_PKG_DIR}/active"
 
     cd ${APKG_CFG_DIR:-/nonexistent} || exit 1
     docker-compose down
@@ -35,7 +29,8 @@ case $1 in
     ;;
 
   reload)
-    if test -f "${APKG_CFG_DIR}/active"; then
+    logger "[Apache] Reloading daemon..."
+    if test -f "${APKG_PKG_DIR}/active"; then
       ./CONTROL/start-stop.sh stop
       ./CONTROL/start-stop.sh start
     fi

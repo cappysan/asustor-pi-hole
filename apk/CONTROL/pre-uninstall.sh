@@ -3,9 +3,10 @@
 #
 . /usr/local/AppCentral/cappysan-pi-hole/.env.install
 cd ${APKG_PKG_DIR:-/nonexistent} || exit 1
+. ${APKG_PKG_DIR}/env
 
-# Remove previous versions
-docker rmi pihole/pihole:2025.11.1
-docker rmi pihole/pihole:2026.02.0
+# Clean
+# =====
+docker images --format "table {{.ID}} {{.Repository}}:{{.Tag}}" | grep 'pihole/pihole:' | cut -d" " -f1 | xargs docker rmi
 
 exit 0

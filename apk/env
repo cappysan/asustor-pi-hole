@@ -1,0 +1,14 @@
+# Functions
+# =========
+function logger() {
+  echo "${@}" >&2
+  syslog --log 0 --level 0 --user SYSTEM --event "${@}"
+}
+
+# User
+# ====
+export HOME=/share/Configuration/pi-hole
+APKG_USER=admin
+APKG_GROUP=root
+
+# vim: ft=sh

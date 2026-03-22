@@ -1,21 +1,30 @@
 #!/usr/bin/env sh
 # SPDX-License-Identifier: MIT
 #
-. /usr/local/AppCentral/cappysan-pi-hole/.env.install
+# ------------------------------------------------------------------------------
+. /usr/local/AppCentral/cappysan-certbot/.env.install
 cd ${APKG_PKG_DIR:-/nonexistent} || exit 1
+. ${APKG_PKG_DIR}/env
+
+# Env
+# ===
+cat ${APKG_PKG_DIR}/conf.dist/version > ${APKG_CFG_DIR}/version
+
+# Beware of symlinks
+cat ${APKG_CFG_DIR}/custom.env ${APKG_CFG_DIR}/version >> ${APKG_CFG_DIR}/.env
+chmod 640 ${APKG_CFG_DIR}/.env ${APKG_CFG_DIR}/custom.env
+
 
 # Dependencies
 # ============
-# persistence: take etc/hosts into account
-if test -f /root/AppCentral/cappysan-persistence/CONTROL/start-stop.sh; then
-  export DOCKER_NO_RELOAD=1
-  /root/AppCentral/cappysan-persistence/CONTROL/start-stop.sh reload
-fi
-# apache: in case we're proxied
-if test -f /root/AppCentral/cappysan-apache/CONTROL/start-stop.sh; then
-  /root/AppCentral/cappysan-apache/CONTROL/start-stop.sh reload
-fi
+# Apache calls certbot and persistence, but it sets DOCKER_NO_RELOAD=1
+# so call certbot a second time.
+/usr/local/AppCentral/cappysan-apache/CONTROL/start-stop.sh reload
+/usr/local/AppCentral/cappysan-certbot/CONTROL/start-stop.sh reload
 
+
+# SSL
+# ===
 # Copy the current SSL to pihole
 # Certificate can be other than Asustor or Certbot
 cd ${APKG_CFG_DIR:-/nonexistent} || exit 1
@@ -26,3 +35,6 @@ elif test -f /usr/builtin/etc/certificate/ssl.chain; then
 else
   cat /usr/builtin/etc/certificate/ssl.key /usr/builtin/etc/certificate/ssl.crt > etc/pihole/tls.pem
 fi
+
+
+exit 0
