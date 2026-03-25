@@ -7,7 +7,7 @@ cd ${APKG_PKG_DIR:-/nonexistent} || exit 1
 
 case $1 in
   start)
-    logger "[pi-hole] Starting docker container..."
+    logger "[${WHAT}] Starting docker container..."
     touch "${APKG_PKG_DIR}/active"
     ./CONTROL/start-hook.sh
 
@@ -16,7 +16,7 @@ case $1 in
     ;;
 
   stop)
-    logger "[pi-hole] Stopping docker container..."
+    logger "[${WHAT}] Stopping docker container..."
     rm -f "${APKG_PKG_DIR}/active"
 
     cd ${APKG_CFG_DIR:-/nonexistent} || exit 1
@@ -28,18 +28,10 @@ case $1 in
     ./CONTROL/start-stop.sh start
     ;;
 
-  reload)
-    logger "[Apache] Reloading daemon..."
-    if test -f "${APKG_PKG_DIR}/active"; then
-      ./CONTROL/start-stop.sh stop
-      ./CONTROL/start-stop.sh start
-    fi
-    ;;
-
   *)
-    echo "usage: $0 {start|stop|restart|reload}"
+    echo "usage: $0 {start|stop|restart}"
     exit 1
     ;;
-
 esac
+
 exit 0

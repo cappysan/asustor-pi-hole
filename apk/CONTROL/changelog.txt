@@ -4,12 +4,12 @@ Changes relevant to the users of Cappysan's Asustor Pi-hole APK are documented h
 
 This project adheres to [CalVer Versioning](https://calver.org/).
 
-## Unreleased
+## 2026.02.0-r5 - 2026-03-22
 
 ### Changed
 
 - File locations
-
+- Limit to start, stop, restart
 
 ## 2026.02.0-r4 - 2026-03-22
 

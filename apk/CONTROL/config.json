@@ -10,7 +10,7 @@
     "maintainer": "Cappysan",
     "name": "pi-hole",
     "package": "cappysan-pi-hole",
-    "version": "2026.02.1-r11",
+    "version": "2026.02.1-r4",
     "developer": "pi-hole",
     "website": "https://gitlab.com/cappysan/asustor/pi-hole"
   },
@@ -30,5 +30,19 @@
       5010,
       5011
     ]
+  },
+  "adm-desktop": {
+    "app": {
+      "port": 5011,
+      "protocol": "https",
+      "type": "custom",
+      "http_port": 5010,
+      "https_port": 5011,
+      "url": "/"
+    },
+    "privilege": {
+      "accessible": "administrators",
+      "customizable": false
+    }
   }
 }

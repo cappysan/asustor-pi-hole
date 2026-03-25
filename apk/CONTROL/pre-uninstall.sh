@@ -7,6 +7,9 @@ cd ${APKG_PKG_DIR:-/nonexistent} || exit 1
 
 # Clean
 # =====
-docker images --format "table {{.ID}} {{.Repository}}:{{.Tag}}" | grep 'pihole/pihole:' | cut -d" " -f1 | xargs docker rmi
+if test "x${APKG_PKG_STATUS}" != "xupgrade"; then
+  logger "[${WHAT}] Delete docker images..."
+  docker images --format "table {{.ID}} {{.Repository}}:{{.Tag}}" | grep 'pihole/pihole:' | cut -d" " -f1 | xargs docker rmi
+fi
 
 exit 0

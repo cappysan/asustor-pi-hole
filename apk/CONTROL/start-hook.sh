@@ -12,10 +12,10 @@ cd ${APKG_PKG_DIR:-/nonexistent} || exit 1
 cat ${APKG_CFG_DIR}/custom.env ${APKG_PKG_DIR}/version > ${APKG_CFG_DIR}/.env
 chmod 640 ${APKG_CFG_DIR}/.env ${APKG_CFG_DIR}/custom.env
 
-
 # Dependencies
 # ============
-# Apache calls certbot and persistence, but it sets DOCKER_NO_RELOAD=1
+# Apache calls certbot and persistence, cancel the Apache no reload policy
+export DOCKER_NO_RELOAD=0
 /usr/local/AppCentral/cappysan-apache/CONTROL/start-stop.sh reload
 
 
@@ -31,6 +31,5 @@ elif test -f /usr/builtin/etc/certificate/ssl.chain; then
 else
   cat /usr/builtin/etc/certificate/ssl.key /usr/builtin/etc/certificate/ssl.crt > etc/pihole/tls.pem
 fi
-
 
 exit 0
