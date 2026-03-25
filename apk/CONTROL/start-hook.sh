@@ -12,10 +12,12 @@ cd ${APKG_PKG_DIR:-/nonexistent} || exit 1
 cat ${APKG_CFG_DIR}/custom.env ${APKG_PKG_DIR}/version > ${APKG_CFG_DIR}/.env
 chmod 640 ${APKG_CFG_DIR}/.env ${APKG_CFG_DIR}/custom.env
 
+
 # Dependencies
 # ============
 # Apache calls certbot and persistence, cancel the Apache no reload policy
-export DOCKER_NO_RELOAD=0
+export DOCKER_RELOAD=1
+export CERTBOT_RELOAD=0
 /usr/local/AppCentral/cappysan-apache/CONTROL/start-stop.sh reload
 
 
