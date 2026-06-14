@@ -10,30 +10,14 @@ Linux network-level advertisement and Internet tracker blocking application whic
 4. [License](#license)  
 5. [Links](#links)  
 
-
 ## Installation <a name="installation"></a>
 
 The APK application is available as a GitLab release, and on [https://asustor.cappysan.dev/](https://asustor.cappysan.dev/)
 
-The APK application is not available as an Asustor App Central application as Asustor does not accept duplicates, even if they differ.
-
 
 ## Usage <a name="usage"></a>
 
-More documentation can be found at [https://blog.cappysan.dev/asustor/](https://blog.cappysan.dev/asustor/)
-
-
-### Installing
-
-- Download the APK file from Cappysan's Asustor website ([https://asustor.cappysan.dev/pi-hole/](https://asustor.cappysan.dev/pi-hole/)  
-- Install the package
-- A share folder named "Configuration" will be created. Configure it to only enable admins in read-write mode. Deny anonymous and user access.
-- Ensure you can modify files in the "Configuration/cerbot" with either SSH, a mount point, or the Asustor File Explorer.
-
-
-### Configuration
-
-Files within the `Configuration` shared folder can be modified via SSH or by exporting the shared folder through NFS, SMB, FTP, ...
+Documentation can be found at [https://blog.cappysan.dev/asustor/](https://blog.cappysan.dev/asustor/) and [https://gitlab.com/cappysan/asustor/pi-hole](https://gitlab.com/cappysan/asustor/pi-hole).
 
 
 ## Support & Sponsorship <a name="support"></a>
@@ -60,8 +44,8 @@ Please refer to the upstream software documentation for details on their respect
 
 ## Links <a name="links"></a>
 
-  * Cappysan's Asustor Home Lab: [https://blog.cappysan.dev/asustor/](https://blog.cappysan.dev/asustor/)
-  * Cappysan's Asustor APKs: [https://asustor.cappysan.dev/](https://asustor.cappysan.dev/)
+  * Cappysan's Asustor Tutorials & Procedures: [https://blog.cappysan.dev/asustor/index.html](https://blog.cappysan.dev/asustor/index.html)
+  * Cappysan's Asustor APKs website: [https://asustor.cappysan.dev/](https://asustor.cappysan.dev/)
   * GitLab: [https://gitlab.com/cappysan/asustor/pi-hole](https://gitlab.com/cappysan/asustor/pi-hole)
   * GitHub: [https://github.com/cappysan/asustor-pi-hole](https://github.com/cappysan/asustor-pi-hole)
   * Discord: [https://discord.gg/SsY3CAdp4Q](https://discord.gg/SsY3CAdp4Q)

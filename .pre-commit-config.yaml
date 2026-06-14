@@ -16,6 +16,7 @@ repos:
       - id: check-symlinks
       - id: check-toml
       - id: check-vcs-permalinks
+      - id: check-xml
       - id: check-yaml
         exclude: ".gitlab"
       - id: destroyed-symlinks
@@ -24,6 +25,8 @@ repos:
       - id: file-contents-sorter
         args: ["--unique"]
         files: "support/codespell.exclude"
+      - id: fix-byte-order-marker
+      - id: forbid-submodules
       - id: mixed-line-ending
         name: "fix mixed line ending"
         args: ["--fix=lf"]
@@ -35,14 +38,15 @@ repos:
         name: "fix trailing whitespace"
         args: ["--markdown-linebreak-ext", "md"]
 
+
   - repo: "https://github.com/codespell-project/codespell"
     rev: v2.4.2
     hooks:
     - id: codespell
       name: "run codespell"
-      exclude: "support/apkg.py"
       additional_dependencies:
         - tomli
+
 
   - repo: "https://github.com/andreoliwa/nitpick"
     rev: v0.38.1
