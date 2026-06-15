@@ -4,6 +4,14 @@ Changes relevant to the users of Cappysan's Asustor Pi-hole APK are documented h
 
 This project adheres to [CalVer Versioning](https://calver.org/).
 
+
+## 2026.06.0-r37 - 2026-06-15
+
+### Changed
+
+- Changed icons
+
+
 ## 2026.06.0-r35 - 2026-06-14
 
 ### Added
