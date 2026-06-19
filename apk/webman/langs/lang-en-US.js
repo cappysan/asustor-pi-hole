@@ -38,7 +38,7 @@ _AS_STRINGS.PIHOLE.ERR_NO_QUOTES           = 'Quotes are not allowed';
 _AS_STRINGS.PIHOLE.WARN_HOSTS_PERSISTENCE = '<span style="color:#a32d2d;font-size:12px;white-space:nowrap;">Warning: Configuration of the hosts requires the cappysan-persistence package installed.</span><div style="height:12px;"></div>';
 
 /* Apache tab */
-_AS_STRINGS.PIHOLE.WARN_APACHE_CAPPYSAN = '<span style="color:#a32d2d;font-size:12px;"><strong>Warning:</strong> Configuration of Apache requires the cappysan-apache package installed.</span>';
+_AS_STRINGS.PIHOLE.WARN_APACHE_CAPPYSAN = '<span style="color:#a32d2d;font-size:12px;"><strong>Warning:</strong> Configuration of Apache might require the cappysan-apache package installed.</span>';
 _AS_STRINGS.PIHOLE.APACHE_NOT_IMPLEMENTED = 'Apache configuration is not available. This feature requires the cappysan-apache package.';
 _AS_STRINGS.PIHOLE.LABEL_APACHE_PROXY = 'Enable Apache proxy';
 _AS_STRINGS.PIHOLE.LABEL_APACHE_HOSTNAME = 'Hostname';
