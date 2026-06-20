@@ -45,8 +45,8 @@ CFG_DIR="/share/Configuration/pi-hole"
 if [ -n "$APKG_CFG_DIR" ]; then CFG_DIR="$APKG_CFG_DIR"; fi
 CUSTOM_ENV="${CFG_DIR}/custom.env"
 
-APACHE_SITES_AVAILABLE="/share/Configuration/apache/sites-available"
-APACHE_SITES_ENABLED="/usr/local/AppCentral/cappysan-apache/apache/sites-enabled"
+APACHE_SITES_AVAILABLE="${CFG_DIR}/deps.d/apache/sites-available"
+APACHE_SITES_ENABLED="${CFG_DIR}/deps.d/apache/sites-enabled"
 APACHE_CONF_AVAILABLE="${APACHE_SITES_AVAILABLE}/pi-hole.conf"
 APACHE_CONF_ENABLED="${APACHE_SITES_ENABLED}/pi-hole.conf"
 
@@ -164,32 +164,7 @@ PYEOF
                 printf '%s' "$RESULT"
                 ;;
 
-            hosts)
-                HOSTS_FILE="${CFG_DIR}/deps.d/persistence/hosts"
-                export _HOSTS_FILE="$HOSTS_FILE"
-                RESULT=$("$PYTHON" - << 'PYEOF'
-import json, os
-path = os.environ.get('_HOSTS_FILE', '')
-content = ''
-try:
-    with open(path) as f:
-        content = f.read()
-except Exception:
-    pass
-print(json.dumps({'success': True, 'content': content}))
-PYEOF
-)
-                printf 'Content-Type: application/json\r\n\r\n'
-                printf '%s' "$RESULT"
-                ;;
-
             apache)
-                # Check if file exists
-                PROXY_ENABLED="false"
-                if [ -f "$APACHE_CONF_AVAILABLE" ]; then
-                    PROXY_ENABLED="true"
-                fi
-
                 # Read hostname, server_fqdn, redirect_to, proxy_to from Define lines
                 A_HOSTNAME="pi-hole"
                 A_FQDN='${hostname}.${domain}'
@@ -206,12 +181,11 @@ PYEOF
                     [ -n "$EXTRACTED_P" ] && A_PROXY_TO="$EXTRACTED_P"
                 fi
 
-                export _PROXY_ENABLED="$PROXY_ENABLED" _A_HOSTNAME="$A_HOSTNAME" _A_FQDN="$A_FQDN" _A_REDIRECT="$A_REDIRECT" _A_PROXY_TO="$A_PROXY_TO"
+                export _A_HOSTNAME="$A_HOSTNAME" _A_FQDN="$A_FQDN" _A_REDIRECT="$A_REDIRECT" _A_PROXY_TO="$A_PROXY_TO"
                 RESULT=$("$PYTHON" - << 'PYEOF'
 import json, os
 print(json.dumps({
     'success': True,
-    'apache_proxy_enabled': os.environ.get('_PROXY_ENABLED', 'false') == 'true',
     'apache_hostname': os.environ.get('_A_HOSTNAME', 'pi-hole'),
     'apache_fqdn': os.environ.get('_A_FQDN', '${hostname}.${domain}'),
     'apache_redirect_to': os.environ.get('_A_REDIRECT', 'https://${server_fqdn}/'),
@@ -338,29 +312,7 @@ PYEOF
                 respond '{"success":true}'
                 ;;
 
-            hosts)
-                HOSTS_CONTENT=$(get_param content)
-                HOSTS_FILE="${CFG_DIR}/deps.d/persistence/hosts"
-                mkdir -p "$(dirname "$HOSTS_FILE")"
-                printf '%s' "$HOSTS_CONTENT" > "$HOSTS_FILE"
-                if [ -s "$HOSTS_FILE" ] && [ "$(tail -c 1 "$HOSTS_FILE" | wc -l)" -eq 0 ]; then
-                    printf '\n' >> "$HOSTS_FILE"
-                fi
-                chmod 640 "$HOSTS_FILE" 2>/dev/null
-
-                # Run persistence restart
-                PERSIST_SCRIPT="/usr/local/AppCentral/cappysan-persistence/CONTROL/start-stop.sh"
-                if [ ! -f "$PERSIST_SCRIPT" ]; then
-                    respond '{"success":true,"warning":"cappysan-persistence package is not installed."}'
-                elif ! "$PERSIST_SCRIPT" restart >> "$LOG" 2>&1; then
-                    respond '{"success":true,"warning":"Failed to restart cappysan-persistence."}'
-                else
-                    respond '{"success":true}'
-                fi
-                ;;
-
             apache)
-                APACHE_PROXY=$(get_param apache_proxy_enabled)
                 APACHE_HOSTNAME=$(get_param apache_hostname)
                 APACHE_FQDN=$(get_param apache_fqdn)
                 APACHE_REDIRECT=$(get_param apache_redirect_to)
@@ -372,25 +324,20 @@ PYEOF
                 [ -z "$APACHE_REDIRECT" ] && APACHE_REDIRECT='https://${server_fqdn}/'
                 [ -z "$APACHE_PROXY_TO" ] && APACHE_PROXY_TO='https://127.0.0.1:5011/'
 
-                if [ "$APACHE_PROXY" != "true" ]; then
-                    # Disable: remove both files
-                    rm -f "$APACHE_CONF_ENABLED" 2>/dev/null
-                    rm -f "$APACHE_CONF_AVAILABLE" 2>/dev/null
-                else
-                    # Enable: if file doesn't exist, copy template
-                    mkdir -p "$APACHE_SITES_AVAILABLE" 2>/dev/null
-                    if [ ! -f "$APACHE_CONF_AVAILABLE" ]; then
-                        TEMPLATE="/usr/local/AppCentral/cappysan-pi-hole/CONTROL/apache.conf"
-                        if [ -f "$TEMPLATE" ]; then
-                            cp "$TEMPLATE" "$APACHE_CONF_AVAILABLE"
-                        fi
+                # If file doesn't exist yet, seed it from the template
+                mkdir -p "$APACHE_SITES_AVAILABLE" 2>/dev/null
+                if [ ! -f "$APACHE_CONF_AVAILABLE" ]; then
+                    TEMPLATE="/usr/local/AppCentral/cappysan-pi-hole/CONTROL/apache.conf"
+                    if [ -f "$TEMPLATE" ]; then
+                        cp "$TEMPLATE" "$APACHE_CONF_AVAILABLE"
                     fi
+                fi
 
-                    # Only rewrite the four Define lines at the top
-                    export _A_HOSTNAME="$APACHE_HOSTNAME" _A_FQDN="$APACHE_FQDN" \
-                           _A_REDIRECT="$APACHE_REDIRECT" _A_PROXY_TO="$APACHE_PROXY_TO" \
-                           _CONF="$APACHE_CONF_AVAILABLE"
-                    "$PYTHON" - << 'PYEOF'
+                # Only rewrite the four Define lines at the top
+                export _A_HOSTNAME="$APACHE_HOSTNAME" _A_FQDN="$APACHE_FQDN" \
+                       _A_REDIRECT="$APACHE_REDIRECT" _A_PROXY_TO="$APACHE_PROXY_TO" \
+                       _CONF="$APACHE_CONF_AVAILABLE"
+                "$PYTHON" - << 'PYEOF'
 import os
 
 path = os.environ.get('_CONF', '')
@@ -422,11 +369,12 @@ with open(path, 'w') as f:
     f.writelines(out)
 PYEOF
 
-                    # Create symlink (relative path)
-                    mkdir -p "$APACHE_SITES_ENABLED" 2>/dev/null
-                    rm -f "$APACHE_CONF_ENABLED" 2>/dev/null
-                    ln -s ../sites-available/pi-hole.conf "$APACHE_CONF_ENABLED" 2>/dev/null
-                fi
+                # Create symlink (relative path) so apache picks the site up.
+                # Whether the site is actually active/served is handled by
+                # the cappysan-apache package itself.
+                mkdir -p "$APACHE_SITES_ENABLED" 2>/dev/null
+                rm -f "$APACHE_CONF_ENABLED" 2>/dev/null
+                ln -s ../sites-available/pi-hole.conf "$APACHE_CONF_ENABLED" 2>/dev/null
 
                 # Run apache reload
                 APACHE_SCRIPT="/usr/local/AppCentral/cappysan-apache/CONTROL/start-stop.sh"
