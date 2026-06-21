@@ -56,7 +56,7 @@ Ext.define('AS.ARC.apps.pihole.core', {
                 flex:     1,
                 renderer: function (v, metadata, record) {
                     var icons = {
-                        settings: AS.ARC.util.fixDc('apps/settings/images/icon-fn-certificate.png'),
+                        settings: AS.ARC.util.fixDc('/apps/cappysan-pi-hole/images/icon-fn-settings.png'),
                         apache:   AS.ARC.util.fixDc('/apps/cappysan-pi-hole/images/icon-fn-apache.png')
                     };
                     var iconUrl = icons[record.data.tabId] || icons.settings;

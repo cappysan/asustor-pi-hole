@@ -307,8 +307,6 @@ src = toggle(src, r'^[ \t]*#?\s*-\s*NET_ADMIN\s*$',     dhcp)
 with open(path, 'w') as f:
     f.write(src)
 PYEOF
-                # Restart the Docker container
-                /usr/local/AppCentral/cappysan-pi-hole/CONTROL/start-stop.sh restart >> "$LOG" 2>&1 &
                 respond '{"success":true}'
                 ;;
 
@@ -376,15 +374,7 @@ PYEOF
                 rm -f "$APACHE_CONF_ENABLED" 2>/dev/null
                 ln -s ../sites-available/pi-hole.conf "$APACHE_CONF_ENABLED" 2>/dev/null
 
-                # Run apache reload
-                APACHE_SCRIPT="/usr/local/AppCentral/cappysan-apache/CONTROL/start-stop.sh"
-                if [ ! -f "$APACHE_SCRIPT" ]; then
-                    respond '{"success":true,"warning":"cappysan-apache package is not installed."}'
-                elif ! "$APACHE_SCRIPT" reload >> "$LOG" 2>&1; then
-                    respond '{"success":true,"warning":"Failed to reload cappysan-apache."}'
-                else
-                    respond '{"success":true}'
-                fi
+                respond '{"success":true}'
                 ;;
 
             *)
