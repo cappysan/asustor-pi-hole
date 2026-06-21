@@ -8,7 +8,7 @@
 dynamic = ["dependencies"]
 
 name = "cappysan-pi-hole"
-version = "2026.6.0-r61"
+version = "2026.6.0-r62"
 authors = [
   {name = "Julien Lecomte", email = "julien@cappysan.dev"}
 ]
@@ -24,7 +24,7 @@ Homepage = "https://gitlab.com/cappysan/asustor/pi-hole"
 # Other tools
 # ------------------------------------------------------------------------------
 [tool.bumpversion]
-current_version = "2026.6.0-r61"
+current_version = "2026.6.0-r62"
 
 parse = """(?x)
   (?P<major>0|[1-9]\\d*)\\.
